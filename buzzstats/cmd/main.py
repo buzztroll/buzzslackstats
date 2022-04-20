@@ -7,7 +7,7 @@ import docopt
 import slack_sdk
 import sqlite3
 
-logging.basicConfig(encoding="utf-8", level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
 
 
 DOC_OPT = """buzzstats
