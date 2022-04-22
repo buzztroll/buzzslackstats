@@ -20,6 +20,7 @@ Options:
   --dry-run                    Gather the data but do not post results
   --fetch                      Update database by syncing with the slack channel
   --channel=NAME               The name of the channel to gather stats [default: general]
+  --post-channel=NAME          The name of the channel to to post stats to [default: random]
   --user=NAME                  The name of the user that says stats [default: slackbot]
   --start-date=DATE            yyyy-mm-dd date format for the first day to look
   --end-date=DATE              yyyy-mm-dd date format for the last day to look
@@ -60,6 +61,7 @@ class TaintReporter(object):
         self.dbfile = docopt_args["--dbfile"]
         self.dry_run = docopt_args["--dry-run"]
         self.fetch = docopt_args["--fetch"]
+        self.post_channel_id = docopt_args['--post-channel']
         self.start_time = None
         self.end_time = None
 
@@ -200,7 +202,7 @@ class TaintReporter(object):
         stat_str = self._get_stats()
         logging.info(stat_str)
         if not self.dry_run:
-            response = self.slack_client.chat_postMessage(channel=self.channel_id, text=stat_str)
+            response = self.slack_client.chat_postMessage(channel=self.post_channel_id, text=stat_str)
             logging.info(response.status_code)
 
 
